@@ -8,5 +8,10 @@ class Locators:
     LOGIN_INPUT_XPATH = "//*[@id='signinEmail']"
     PASS_INPUT_XPATH = "//*[@id='signinPassword']"
     LOGIN_BUTTON_XPATH = "//button[text()='Login']"
+    ADD_CAR_BUTTON_XPATH = "//button[text()='Add car']"
+    BRAND_INPUT_XPATH = "//*[@id='addCarBrand']"
+    MODEL_INPUT_XPATH = "//*[@id='addCarModel']"
+    MILEAGE_INPUT_XPATH = "//*[@id='addCarMileage']"
+    ADD_BUTTON_XPATH = "//button[text()='Add']"
 
 

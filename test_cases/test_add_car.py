@@ -1,59 +1,45 @@
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from page.sign_up_page import SignUpPage
+from page.login_page import LoginPage
+from page.add_car_page import AddCarPage
 from model.sign_up import SignUpPostModel
 from model.login import UserLogin
-import requests
-from driver import Driver
-from pages.login_page import LoginPage(BasePage)
-from pages.sign_up_page import SignUpPage(BasePage)
-from locators import Locators
-from base_page import BasePage
+from model.add_car import AddCarPostModel
 
+class TestAddCar(unittest.TestCase):
 
-class TestAuthentication:
-    def setup_class_signup(self):
-        self.driver = Driver.get_chrome_driver()
-        self.sign_up_page = SignUpPagePage()
-        self.garage_page = GaragePage()
-        self.session = requests.session()
-        register_user = SignUpPostModel("Jon", "Snow", "tes3t5132334ts@rs.fd", "Qwerty123", "Qwerty123")
-        self.session.post("https://qauto2.forstudy.space/api/auth/signup", json=register_user.__dict__)
+    def setUp(self):
+        # Set up the browser instance
+        self.driver = webdriver.Firefox()
 
-    def setup_class_login(self):
-        self.driver = Driver.get_chrome_driver()
-        self.login_page = LoginPage()
-        self.garage_page = GaragePage()
-        self.session = requests.session()
-        login_user = UserLogin("tes3t5132334ts@rs.fd", "Qwerty123")
-        self.session.post("https://qauto2.forstudy.space/api/auth/signup", json=login_user.__dict__)
+        # Open the page for signing up
+        self.driver.get("https://qauto2.forstudy.space")
 
-        assert
+        # Create a new user account
+        signup_page = SignUpPage(self.driver)
+        signup_data = SignUpPostModel("John", "Doe", "johndoe@example.com", "password", "password")
+        signup_page.signup(signup_data.name, signup_data.lastName, signup_data.email, signup_data.password, signup_data.repeatPassword)
 
-def test_check_login_window(self):
-        self.login_page.get_sign_in_button().click()
-        assert self.login_page.get_email_field().is_displayed()
+        # Log in to the website
+        login_page = LoginPage(self.driver)
+        login_data = UserLogin("johndoe@example.com", "password")
+        login_page.login(login_data.email, login_data.password)
 
-    def test_check_incorrect_email(self):
-        self.login_page.get_sign_in_button().click()
-        self.login_page.get_email_field().fill_field("asd123")
-        self.login_page.get_remember_me_button().click()
-        assert self.login_page.get_login_incorrect_alert().is_displayed()
+    def tearDown(self):
+        # Close the browser instance
+        self.driver.quit()
 
-    def test_check_successful_login(self):
-        self.login_page.get_sign_in_button().click()
-        self.login_page.get_email_field().fill_field("test1234ts@rs.fd")
-        self.login_page.get_password_field().fill_field("Qwerty123")
-        self.login_page.get_login_button().click()
-        assert self.garage_page.get_my_profile_button().is_displayed()
+    def test_add_car(self):
+        # Add a new car
+        add_car_page = AddCarPage(self.driver)
+        add_car_data = AddCarPostModel("1", "1", "10000")
+        add_car_page.add_car(add_car_data.carBrandId, add_car_data.carModelId, add_car_data.mileage)
 
-    def test_check_login_with_removed_user(self):
-        new_user = RegisterPostModel("Jon", "Snow", "teasds3t5132334ts@rs.fd", "Qwerty123", "Qwerty123")
-        self.session.post("https://qauto2.forstudy.space/api/auth/signup", json=new_user.__dict__)
-        self.session.delete("https://qauto2.forstudy.space/api/users")
-        self.login_page.get_sign_in_button().click()
-        self.login_page.get_email_field().fill_field("teasds3t5132334ts@rs.fd")
-        self.login_page.get_password_field().fill_field("Qwerty123")
-        self.login_page.get_login_button().click()
-        self.login_page.get_wrong_user_alert().is_displayed()
+        # Assert that the car has been added successfully (you can modify this assertion based on your application)
+        success_message = self.driver.find_element(By.XPATH, "//div[contains(@class, 'alert-success')]")
+        self.assertIsNotNone(success_message)
 
-
-    def teardown_class(self):
-        self.session.delete("https://qauto2.forstudy.space/api/users")
+if __name__ == '__main__':
+    unittest.main()

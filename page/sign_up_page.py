@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
-from base_page_driver import BasePage
-from locators import Locators
+from controls.locators import Locators
+from page.base_page_driver import BasePage
+
 
 class SignUpPage(BasePage):
     USER_NAME_LOCATOR = (By.XPATH, Locators.USER_NAME_XPATH)
