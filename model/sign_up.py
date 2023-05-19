@@ -1,4 +1,5 @@
 class SignUpPostModel:
+
     def __init__(self, name, last_name, email, password, repeat_password):
         self.name = name
         self.lastName = last_name
