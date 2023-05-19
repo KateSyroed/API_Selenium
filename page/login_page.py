@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-
 from model.login import UserLogin
 from page.base_page_driver import BasePageWithDriver
 from controls.locators import Locators

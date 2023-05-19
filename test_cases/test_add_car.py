@@ -1,10 +1,3 @@
-import unittest
-from urllib import response
-
-import self as self
-from selenium.webdriver.common.by import By
-from page.base_page_driver import BasePageWithDriver
-from controls.locators import Locators
 import requests
 from model.sign_up import SignUpPostModel
 from model.login import UserLogin
@@ -13,7 +6,6 @@ from driver import Driver
 from page.car_page import AddCarPage
 from page.login_page import LoginPage
 from page.sign_up_page import SignUpPage
-# from page.car_page import CarPage
 
 
 class TestAddCar:

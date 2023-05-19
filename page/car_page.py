@@ -1,4 +1,3 @@
-from controls.button import Button
 from selenium.webdriver.common.by import By
 from page.base_page_driver import BasePageWithDriver
 from controls.locators import Locators
